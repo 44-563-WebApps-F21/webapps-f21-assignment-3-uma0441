@@ -76,7 +76,42 @@
 </tr> 
 </table>
 
+<hr>
+<h3>Bipartite Graph Check</h3>
+<blackquote>
+    A Bipartite Graph is a graph whose vertices can be divided into two independent sets, U and V such that every edge (u, v) either connects a vertex from U to V or a vertex from V to U. One approach is to check whether the graph is 2-colorable or not using backtracking algorithm m coloring problem.
+</blackquote>
+</br>
+</br>
+<a href="https://www.geeksforgeeks.org/bipartite-graph/#:~:text=A%20Bipartite%20Graph%20is%20a,vertex%20from%20V%20to%20U.&text=One%20approach%20is%20to%20check,backtracking%20algorithm%20m%20coloring%20problem.">Click here for Source Code</a>
+<pre>
+int n;
+vector<vector<int>> adj;
 
+vector<int> side(n, -1);
+bool is_bipartite = true;
+queue<int> q;
+for (int st = 0; st < n; ++st) {
+    if (side[st] == -1) {
+        q.push(st);
+        side[st] = 0;
+        while (!q.empty()) {
+            int v = q.front();
+            q.pop();
+            for (int u : adj[v]) {
+                if (side[u] == -1) {
+                    side[u] = side[v] ^ 1;
+                    q.push(u);
+                } else {
+                    is_bipartite &= side[u] != side[v];
+                }
+            }
+        }
+    }
+}
+
+cout << (is_bipartite ? "YES" : "NO") << endl;
+</per>
 
 </body>
 </html>
